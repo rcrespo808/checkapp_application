@@ -1,6 +1,5 @@
 import '../art_piece_page/art_piece_page_widget.dart';
 import '../auth/auth_util.dart';
-import '../backend/api_requests/api_calls.dart';
 import '../backend/backend.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
@@ -109,153 +108,126 @@ class _MyCollectionWidgetState extends State<MyCollectionWidget> {
                             decoration: BoxDecoration(
                               color: Colors.transparent,
                             ),
-                            child: FutureBuilder<ApiCallResponse>(
-                              future: GetArtPieceCall.call(
-                                objectID: collectionItem.toString(),
+                            child: Card(
+                              clipBehavior: Clip.antiAliasWithSaveLayer,
+                              color: Colors.white,
+                              elevation: 4,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8),
                               ),
-                              builder: (context, snapshot) {
-                                // Customize what your widget looks like when it's loading.
-                                if (!snapshot.hasData) {
-                                  return Center(
-                                    child: SizedBox(
-                                      width: 50,
-                                      height: 50,
-                                      child: CircularProgressIndicator(
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryColor,
+                              child: Container(
+                                width: double.infinity,
+                                height: 320,
+                                decoration: BoxDecoration(
+                                  color: Colors.transparent,
+                                ),
+                                child: InkWell(
+                                  onTap: () async {
+                                    await Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            ArtPiecePageWidget(
+                                          artPiece: (cardGetArtPieceResponse
+                                                  ?.jsonBody ??
+                                              ''),
+                                        ),
                                       ),
-                                    ),
-                                  );
-                                }
-                                final cardGetArtPieceResponse = snapshot.data;
-                                return Card(
-                                  clipBehavior: Clip.antiAliasWithSaveLayer,
-                                  color: Colors.white,
-                                  elevation: 4,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
-                                  child: Container(
-                                    width: double.infinity,
-                                    height: 320,
-                                    decoration: BoxDecoration(
-                                      color: Colors.transparent,
-                                    ),
-                                    child: InkWell(
-                                      onTap: () async {
-                                        await Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                ArtPiecePageWidget(
-                                              artPiece: (cardGetArtPieceResponse
-                                                      ?.jsonBody ??
-                                                  ''),
-                                            ),
-                                          ),
-                                        );
-                                      },
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: [
-                                          Expanded(
-                                            child: Stack(
-                                              children: [
-                                                Align(
-                                                  alignment:
-                                                      AlignmentDirectional(
-                                                          0, 0),
-                                                  child: Image.network(
-                                                    getJsonField(
-                                                      (cardGetArtPieceResponse
-                                                              ?.jsonBody ??
-                                                          ''),
-                                                      r'''$.primaryImage''',
-                                                    ),
-                                                    width: double.infinity,
-                                                    height: double.infinity,
-                                                    fit: BoxFit.cover,
-                                                  ),
+                                    );
+                                  },
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Expanded(
+                                        child: Stack(
+                                          children: [
+                                            Align(
+                                              alignment:
+                                                  AlignmentDirectional(0, 0),
+                                              child: Image.network(
+                                                getJsonField(
+                                                  (cardGetArtPieceResponse
+                                                          ?.jsonBody ??
+                                                      ''),
+                                                  r'''$.primaryImage''',
                                                 ),
-                                                Align(
-                                                  alignment:
-                                                      AlignmentDirectional(
-                                                          1, -1),
-                                                  child: Padding(
-                                                    padding:
-                                                        EdgeInsetsDirectional
-                                                            .fromSTEB(
-                                                                0, 12, 12, 0),
-                                                    child: Container(
-                                                      width: 30,
-                                                      height: 30,
-                                                      decoration: BoxDecoration(
-                                                        color: Colors.black,
-                                                        shape: BoxShape.circle,
-                                                      ),
-                                                      child: InkWell(
-                                                        onTap: () async {
-                                                          final usersUpdateData =
-                                                              {
-                                                            'favorites':
-                                                                FieldValue
-                                                                    .arrayRemove([
-                                                              collectionItem
-                                                            ]),
-                                                          };
-                                                          await myCollectionUsersRecord
-                                                              .reference
-                                                              .update(
-                                                                  usersUpdateData);
-                                                        },
-                                                        child: Icon(
-                                                          Icons.favorite,
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
+                                                width: double.infinity,
+                                                height: double.infinity,
+                                                fit: BoxFit.cover,
+                                              ),
+                                            ),
+                                            Align(
+                                              alignment:
+                                                  AlignmentDirectional(1, -1),
+                                              child: Padding(
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(0, 12, 12, 0),
+                                                child: Container(
+                                                  width: 30,
+                                                  height: 30,
+                                                  decoration: BoxDecoration(
+                                                    color: Colors.black,
+                                                    shape: BoxShape.circle,
+                                                  ),
+                                                  child: InkWell(
+                                                    onTap: () async {
+                                                      final usersUpdateData = {
+                                                        'favorites': FieldValue
+                                                            .arrayRemove([
+                                                          collectionItem
+                                                        ]),
+                                                      };
+                                                      await myCollectionUsersRecord
+                                                          .reference
+                                                          .update(
+                                                              usersUpdateData);
+                                                    },
+                                                    child: Icon(
+                                                      Icons.favorite,
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
                                                               .primaryColor,
-                                                          size: 24,
-                                                        ),
-                                                      ),
+                                                      size: 24,
                                                     ),
                                                   ),
                                                 ),
-                                              ],
+                                              ),
                                             ),
-                                          ),
-                                          Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    16, 0, 16, 0),
-                                            child: Row(
-                                              mainAxisSize: MainAxisSize.max,
-                                              children: [
-                                                Expanded(
-                                                  child: Padding(
-                                                    padding:
-                                                        EdgeInsetsDirectional
-                                                            .fromSTEB(
-                                                                12, 0, 0, 0),
-                                                    child: Column(
-                                                      mainAxisSize:
-                                                          MainAxisSize.max,
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        Padding(
-                                                          padding:
-                                                              EdgeInsetsDirectional
-                                                                  .fromSTEB(0,
-                                                                      6, 0, 4),
-                                                          child: Text(
-                                                            getJsonField(
-                                                              (cardGetArtPieceResponse
-                                                                      ?.jsonBody ??
-                                                                  ''),
-                                                              r'''$.title''',
-                                                            ).toString(),
-                                                            style: FlutterFlowTheme
-                                                                    .of(context)
+                                          ],
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            16, 0, 16, 0),
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          children: [
+                                            Expanded(
+                                              child: Padding(
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(12, 0, 0, 0),
+                                                child: Column(
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Padding(
+                                                      padding:
+                                                          EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  0, 6, 0, 4),
+                                                      child: Text(
+                                                        getJsonField(
+                                                          (cardGetArtPieceResponse
+                                                                  ?.jsonBody ??
+                                                              ''),
+                                                          r'''$.title''',
+                                                        ).toString(),
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
                                                                 .bodyText2
                                                                 .override(
                                                                   fontFamily:
@@ -265,95 +237,95 @@ class _MyCollectionWidgetState extends State<MyCollectionWidget> {
                                                                       FontWeight
                                                                           .bold,
                                                                 ),
-                                                          ),
-                                                        ),
-                                                        Padding(
-                                                          padding:
-                                                              EdgeInsetsDirectional
-                                                                  .fromSTEB(0,
-                                                                      3, 0, 6),
-                                                          child: Row(
-                                                            mainAxisSize:
-                                                                MainAxisSize
-                                                                    .max,
-                                                            children: [
-                                                              Padding(
-                                                                padding:
-                                                                    EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                            0,
-                                                                            0,
-                                                                            6,
-                                                                            0),
-                                                                child: Text(
-                                                                  getJsonField(
-                                                                    (cardGetArtPieceResponse
-                                                                            ?.jsonBody ??
-                                                                        ''),
-                                                                    r'''$.objectEndDate''',
-                                                                  ).toString(),
-                                                                  style: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyText2
-                                                                      .override(
-                                                                        fontFamily:
-                                                                            'Playfair Display',
-                                                                        color: FlutterFlowTheme.of(context)
-                                                                            .tertiaryColor,
-                                                                        fontSize:
-                                                                            14,
-                                                                        fontWeight:
-                                                                            FontWeight.normal,
-                                                                      ),
-                                                                ),
-                                                              ),
-                                                              Expanded(
-                                                                child:
-                                                                    AutoSizeText(
-                                                                  getJsonField(
-                                                                    (cardGetArtPieceResponse
-                                                                            ?.jsonBody ??
-                                                                        ''),
-                                                                    r'''$.artistDisplayName''',
-                                                                  ).toString(),
-                                                                  style: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyText2
-                                                                      .override(
-                                                                        fontFamily:
-                                                                            'Playfair Display',
-                                                                        color: FlutterFlowTheme.of(context)
-                                                                            .tertiaryColor,
-                                                                        fontSize:
-                                                                            14,
-                                                                        fontWeight:
-                                                                            FontWeight.normal,
-                                                                      ),
-                                                                ),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                      ],
+                                                      ),
                                                     ),
-                                                  ),
+                                                    Padding(
+                                                      padding:
+                                                          EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  0, 3, 0, 6),
+                                                      child: Row(
+                                                        mainAxisSize:
+                                                            MainAxisSize.max,
+                                                        children: [
+                                                          Padding(
+                                                            padding:
+                                                                EdgeInsetsDirectional
+                                                                    .fromSTEB(
+                                                                        0,
+                                                                        0,
+                                                                        6,
+                                                                        0),
+                                                            child: Text(
+                                                              getJsonField(
+                                                                (cardGetArtPieceResponse
+                                                                        ?.jsonBody ??
+                                                                    ''),
+                                                                r'''$.objectEndDate''',
+                                                              ).toString(),
+                                                              style: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .bodyText2
+                                                                  .override(
+                                                                    fontFamily:
+                                                                        'Playfair Display',
+                                                                    color: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .tertiaryColor,
+                                                                    fontSize:
+                                                                        14,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .normal,
+                                                                  ),
+                                                            ),
+                                                          ),
+                                                          Expanded(
+                                                            child: AutoSizeText(
+                                                              getJsonField(
+                                                                (cardGetArtPieceResponse
+                                                                        ?.jsonBody ??
+                                                                    ''),
+                                                                r'''$.artistDisplayName''',
+                                                              ).toString(),
+                                                              style: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .bodyText2
+                                                                  .override(
+                                                                    fontFamily:
+                                                                        'Playfair Display',
+                                                                    color: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .tertiaryColor,
+                                                                    fontSize:
+                                                                        14,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .normal,
+                                                                  ),
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ],
                                                 ),
-                                                Icon(
-                                                  Icons.arrow_forward_ios,
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .tertiaryColor,
-                                                  size: 24,
-                                                ),
-                                              ],
+                                              ),
                                             ),
-                                          ),
-                                        ],
+                                            Icon(
+                                              Icons.arrow_forward_ios,
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .tertiaryColor,
+                                              size: 24,
+                                            ),
+                                          ],
+                                        ),
                                       ),
-                                    ),
+                                    ],
                                   ),
-                                );
-                              },
+                                ),
+                              ),
                             ),
                           );
                         },

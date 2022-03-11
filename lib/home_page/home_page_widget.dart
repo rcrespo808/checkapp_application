@@ -1,4 +1,4 @@
-import '../backend/api_requests/api_calls.dart';
+import '../backend/backend.dart';
 import '../department_highlights_page/department_highlights_page_widget.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
@@ -59,7 +59,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                           ),
                         ),
                         Text(
-                          'Your place for searching ART.',
+                          '<<Estilos Temporales>>',
                           style: FlutterFlowTheme.of(context)
                               .bodyText1
                               .override(
@@ -157,7 +157,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                             padding:
                                 EdgeInsetsDirectional.fromSTEB(10, 15, 0, 20),
                             child: Text(
-                              'Museum Departments',
+                              'Talleres',
                               style: FlutterFlowTheme.of(context)
                                   .bodyText1
                                   .override(
@@ -168,8 +168,8 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                             ),
                           ),
                         ),
-                        FutureBuilder<ApiCallResponse>(
-                          future: GetDepartmentsCall.call(),
+                        StreamBuilder<List<ShopRecord>>(
+                          stream: queryShopRecord(),
                           builder: (context, snapshot) {
                             // Customize what your widget looks like when it's loading.
                             if (!snapshot.hasData) {
@@ -184,84 +184,94 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                 ),
                               );
                             }
-                            final gridViewGetDepartmentsResponse =
+                            List<ShopRecord> gridViewShopRecordList =
                                 snapshot.data;
-                            return Builder(
-                              builder: (context) {
-                                final departments = (getJsonField(
-                                          (gridViewGetDepartmentsResponse
-                                                  ?.jsonBody ??
-                                              ''),
-                                          r'''$.departments''',
-                                        )?.toList() ??
-                                        [])
-                                    .take(30)
-                                    .toList();
-                                return GridView.builder(
-                                  padding: EdgeInsets.zero,
-                                  gridDelegate:
-                                      SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisCount: 2,
-                                    crossAxisSpacing: 10,
-                                    mainAxisSpacing: 10,
-                                    childAspectRatio: 1.6,
-                                  ),
-                                  primary: false,
-                                  shrinkWrap: true,
-                                  scrollDirection: Axis.vertical,
-                                  itemCount: departments.length,
-                                  itemBuilder: (context, departmentsIndex) {
-                                    final departmentsItem =
-                                        departments[departmentsIndex];
-                                    return InkWell(
-                                      onTap: () async {
-                                        await Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                DepartmentHighlightsPageWidget(
-                                              departmentId: getJsonField(
-                                                departmentsItem,
-                                                r'''$.departmentId''',
-                                              ),
-                                              displayName: getJsonField(
-                                                departmentsItem,
-                                                r'''$.displayName''',
-                                              ).toString(),
-                                            ),
+                            return GridView.builder(
+                              padding: EdgeInsets.zero,
+                              gridDelegate:
+                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2,
+                                crossAxisSpacing: 10,
+                                mainAxisSpacing: 10,
+                                childAspectRatio: 1.6,
+                              ),
+                              primary: false,
+                              shrinkWrap: true,
+                              scrollDirection: Axis.vertical,
+                              itemCount: gridViewShopRecordList.length,
+                              itemBuilder: (context, gridViewIndex) {
+                                final gridViewShopRecord =
+                                    gridViewShopRecordList[gridViewIndex];
+                                return InkWell(
+                                  onTap: () async {
+                                    await Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            DepartmentHighlightsPageWidget(
+                                          departmentId: getJsonField(
+                                            gridViewShopRecord,
+                                            r'''$.departmentId''',
                                           ),
-                                        );
-                                      },
-                                      child: Card(
-                                        clipBehavior:
-                                            Clip.antiAliasWithSaveLayer,
-                                        color: Colors.white,
-                                        elevation: 4,
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(8),
+                                          displayName: getJsonField(
+                                            gridViewShopRecord,
+                                            r'''$.displayName''',
+                                          ).toString(),
                                         ),
-                                        child: Align(
-                                          alignment: AlignmentDirectional(0, 0),
-                                          child: Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    5, 0, 5, 0),
-                                            child: Text(
+                                      ),
+                                    );
+                                  },
+                                  child: Card(
+                                    clipBehavior: Clip.antiAliasWithSaveLayer,
+                                    color: Colors.white,
+                                    elevation: 4,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    child: Align(
+                                      alignment: AlignmentDirectional(0, 0),
+                                      child: Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            5, 0, 5, 0),
+                                        child: StreamBuilder<List<ShopRecord>>(
+                                          stream: queryShopRecord(
+                                            queryBuilder: (shopRecord) =>
+                                                shopRecord.orderBy('is_open'),
+                                          ),
+                                          builder: (context, snapshot) {
+                                            // Customize what your widget looks like when it's loading.
+                                            if (!snapshot.hasData) {
+                                              return Center(
+                                                child: SizedBox(
+                                                  width: 50,
+                                                  height: 50,
+                                                  child:
+                                                      CircularProgressIndicator(
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .primaryColor,
+                                                  ),
+                                                ),
+                                              );
+                                            }
+                                            List<ShopRecord>
+                                                textShopRecordList =
+                                                snapshot.data;
+                                            return Text(
                                               getJsonField(
-                                                departmentsItem,
+                                                gridViewShopRecord,
                                                 r'''$.displayName''',
                                               ).toString(),
                                               textAlign: TextAlign.center,
                                               style:
                                                   FlutterFlowTheme.of(context)
                                                       .title1,
-                                            ),
-                                          ),
+                                            );
+                                          },
                                         ),
                                       ),
-                                    );
-                                  },
+                                    ),
+                                  ),
                                 );
                               },
                             );

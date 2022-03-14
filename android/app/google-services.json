@@ -7,64 +7,20 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:764412590523:android:204d63ea80ff390c5b2c9e",
-        "android_client_info": {
-          "package_name": "com.flutterflow.checkapptrialrun"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "764412590523-3gl3viksm240l6lau46gm7c8v6rfh2fo.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.flutterflow.checkapptrialrun",
-            "certificate_hash": "9bbb3186b2189ef16d8f272bdab59362c395cbb4"
-          }
-        },
-        {
-          "client_id": "764412590523-klfkpuq8tha5cmeh3h0lubh1rc7hhqat.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.flutterflow.checkapptrialrun",
-            "certificate_hash": "419ea0e6127599cbf090db313c4b84ee931a84e0"
-          }
-        },
-        {
-          "client_id": "764412590523-cgj0soh2p7cn4htfhbtts957mctuusmn.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyBREpvvE4OtobuDR7dL4VG9v7d59tTnHeo"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "764412590523-cgj0soh2p7cn4htfhbtts957mctuusmn.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "764412590523-ecd42k8fcidq4i77io9oi4quibv8lgob.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.flutterflow.fluttermet"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
         "mobilesdk_app_id": "1:764412590523:android:3cc93940e624b2545b2c9e",
         "android_client_info": {
           "package_name": "com.flutterflow.fluttermet"
         }
       },
       "oauth_client": [
+        {
+          "client_id": "764412590523-jdf54gt6uv75e7vaedjm9pucsri316ou.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.flutterflow.fluttermet",
+            "certificate_hash": "419ea0e6127599cbf090db313c4b84ee931a84e0"
+          }
+        },
         {
           "client_id": "764412590523-cgj0soh2p7cn4htfhbtts957mctuusmn.apps.googleusercontent.com",
           "client_type": 3

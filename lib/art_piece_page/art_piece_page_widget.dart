@@ -121,7 +121,7 @@ class _ArtPiecePageWidgetState extends State<ArtPiecePageWidget> {
                         Image.network(
                           getJsonField(
                             widget.artPiece,
-                            r'''$.primaryImage''',
+                            r'''$.photo_url''',
                           ),
                           width: double.infinity,
                           height: 400,
@@ -137,7 +137,7 @@ class _ArtPiecePageWidgetState extends State<ArtPiecePageWidget> {
                               Text(
                                 getJsonField(
                                   widget.artPiece,
-                                  r'''$.title''',
+                                  r'''$.alias''',
                                 ).toString(),
                                 style: FlutterFlowTheme.of(context)
                                     .title1
@@ -165,11 +165,9 @@ class _ArtPiecePageWidgetState extends State<ArtPiecePageWidget> {
                                             .bodyText2
                                             .override(
                                               fontFamily: 'Playfair Display',
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .tertiaryColor,
+                                              color: Color(0xFF272D2D),
                                               fontSize: 15,
-                                              fontWeight: FontWeight.normal,
+                                              fontWeight: FontWeight.bold,
                                             ),
                                       ),
                                     ),
